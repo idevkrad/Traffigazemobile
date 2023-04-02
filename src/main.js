@@ -8,6 +8,7 @@ import axios from 'axios';
 
 import '@/assets/scss/config/default/app.scss';
 import '@/assets/scss/mermaid.min.css';
+import 'vue3-loading-overlay/dist/vue3-loading-overlay.css';
 
 const test = localStorage.getItem('token');
 axios.defaults.baseURL = 'https://traffigaze.rjumli.me/api/';

@@ -11,9 +11,9 @@
     </p>
     <v-btn block elevation="2" @click="getCurrentPosition">Get Current Location</v-btn> -->
     
-    <b-card no-body style="height: calc(100vh - 138px); margin-top: 74px;">
+    <b-card no-body style="min-height: calc(100vh - 138px); margin-top: 74px; margin-bottom: 60px;">
         <b-card-body >
-            <!-- <img src="@/assets/images/small/img-2.jpg" class="img-fluid" alt="Responsive image" /> -->
+            <img v-if="imageUrl != ''" :src="imageUrl" class="img-fluid" alt="Responsive image" />
             <form action="javascript:void(0);">
                 <span class="badge bg-outline-danger badge-outline-danger" style="width: 100%;" v-if="this.post.coordinates == ''">GPS not found</span>
                  <div class="mt-2">
@@ -51,16 +51,17 @@
             </form>
         </b-card-body>
     </b-card>
-
+    <Loading :active="isLoading"  :can-cancel="true"  :on-cancel="onCancel"  loader="dots" background-color="black" :is-full-page="fullPage"></Loading>
   </div>
 </Layout>
 </template>
 <script>
+import Loading from 'vue3-loading-overlay';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import axios from 'axios';
 import Layout from '../../Layouts/Main.vue';
 export default {
-    components : { Layout },
+    components : { Layout, Loading },
     data(){
         return {
             loc: null,
@@ -76,7 +77,9 @@ export default {
             tags: [],
             imageUrl: '',
             render: false,
-            processing: false
+            processing: false,
+            isLoading: false,
+            fullPage: true,
         }
     },
 
@@ -145,10 +148,10 @@ export default {
             // this.fetchAddress();
         },
         failurePosition: function(err) {
-
             console.log('Error Code: ' + err.code + ' Error Message: ' + err.message)
         },
         async create(){
+            this.isLoading = true;
             this.processing = true
             let data = new FormData()
             data.append('user_id', this.post.user_id);
@@ -175,6 +178,7 @@ export default {
                     alert(response.data.message)
                 }
             }).finally(()=>{
+                this.isLoading = false;
                 this.processing = false
             })
         },

@@ -48,8 +48,12 @@
                                     <img :src="post.image" alt="" class="explore-img w-100">
                                     <div class="bg-overlay"></div>
                                     <div class="place-bid-btn">
-                                        <b-link href="#!" class="btn btn-success btn-sm"> View Image</b-link>
+                                        <router-link :to="{ path: '/post/'+post.id }" class="btn btn-success btn-sm"> View Post</router-link>
                                     </div>
+                                    <!-- <div class="discount-time"><h5 id="auction-time-5" class="mb-0 text-white">54 : 11 : 34 : 59</h5></div> -->
+                                </div>
+                                 <div class="hstack gap-3 flex-wrap mt-3">
+                                    <div class="text-muted"><i class='bx bxs-map me-1'></i>{{ (post.barangay) ? post.barangay.name : ''}} ({{ (post.tag) ? post.tag.name : ''}})</div>
                                 </div>
                                 <div class="mt-3 text-muted">
                                    {{ post.information}}

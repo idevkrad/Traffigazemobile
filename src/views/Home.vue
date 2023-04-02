@@ -39,11 +39,12 @@
 </Layout>
 </template>
 <script>
+import Pusher from 'pusher-js';
 import axios from 'axios';
 import { GoogleMap, Marker } from 'vue3-google-map';
 import Layout from '../Layouts/Main.vue';
 export default {
-    components: { Layout, GoogleMap, Marker },
+    components: { Layout, GoogleMap, Marker, Pusher },
     data() {
         return {
             center: {lat: 6.9305836, lng: 122.0824712},
@@ -66,6 +67,7 @@ export default {
     created(){
         this.fetch();
         this.geolocate();
+        this.subscribe();
     },
 
     methods: {
@@ -83,6 +85,18 @@ export default {
                 this.center = marker;
                 this.currentPlace = null;
             }
+        },
+        subscribe() {
+            let pusher = new Pusher('14287ee65fa2808ae890', { cluster: 'ap1' })
+            pusher.subscribe('posts')
+            pusher.bind('App\\Events\\PostBroadcast', data => {
+                // console.log(data);
+                switch(data.type){
+                    case 'post':
+                        this.posts.unshift(data.post);
+                    break;
+                }
+            })
         },
         fetch(){
             axios.get('/posts',{ params : {type : 'all'}})
