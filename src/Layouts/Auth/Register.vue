@@ -16,7 +16,7 @@
                                     <form @submit.prevent="tryToLogIn">
                                         <div class="mb-2">
                                             <label for="name" class="form-label mb-n2 fs-11">Name</label>
-                                            <input type="text" class="form-control" id="name" placeholder="Enter name" v-model="user.name" />
+                                            <input type="text" class="form-control" id="name" placeholder="Enter name" v-model="user.name" style="text-transform: capitalize;"/>
                                             <div class="invalid-feedback">
                                                 <span></span>
                                             </div>

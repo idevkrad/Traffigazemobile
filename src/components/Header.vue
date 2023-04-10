@@ -17,6 +17,21 @@
                         </div>
                     </div>
                 </div>
+                <div class="card-body mt-3" v-if="tag">
+                    <div class="d-flex align-items-center mb-3">
+                        <img v-if="tag.icon" :src="'https://traffigaze.info/images/icons/'+tag.icon" alt=""
+                            class="avatar-xs rounded-circle">
+                        <div class="ms-2 flex-grow-1">
+                            <b-link href="#!">
+                                <h6 class="mb-0 fs-13">{{ tag.name }}</h6>
+                            </b-link>
+                            <p class="mb-0 text-muted fs-11">wew</p>
+                        </div>
+                        <div class="bookmark-icon">
+                            <router-link :to="{ path: '/history'}"><i class="ri ri-close-circle-fill text-dark align-middle h1"></i></router-link>
+                        </div>
+                    </div>
+                </div>
                 <div class="d-flex">
                     <!-- LOGO -->
                     <div class="navbar-brand-box horizontal-logo">  
@@ -27,7 +42,7 @@
                         </router-link>
                     </div>
                 </div>
-                <div class="d-flex align-items-center" v-if="!post">
+                <div class="d-flex align-items-center" v-if="!post && !tag">
                     <div class="ms-1 header-item d-sm-flex">
                         <b-button type="button" variant="ghost-secondary"
                             class="btn-icon btn-topbar rounded-circle light-dark-mode" @click="toggleDarkMode">
@@ -101,7 +116,7 @@
                             </router-link>
                             <router-link class="dropdown-item" to="/setting"><i
                                     class="mdi mdi-cog text-muted fs-16 align-middle me-1"></i>
-                                <span class="align-middle">Setting</span>
+                                <span class="align-middle">Settings</span>
                             </router-link>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" @click="logout"><i
@@ -122,7 +137,7 @@ import Pusher from 'pusher-js';
     import { SimpleBar } from "simplebar-vue3";
     export default {
         components: { SimpleBar, Pusher },
-        props: ['user', 'post'],
+        props: ['user', 'post', 'tag', 'barangay'],
         data(){
             return {
                 user_id: this.$store.state.auth.user.data.id,

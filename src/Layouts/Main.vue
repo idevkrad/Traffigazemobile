@@ -1,7 +1,7 @@
 <template>
     <div>
         <div id="layout-wrapper">
-            <Header :post="post" :user="user.data" />
+            <Header :post="post" :tag="tag" :user="user.data" />
                  <slot />
             <Footer :post="post"/>
         </div>
@@ -11,7 +11,7 @@
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
 export default {
-    props: ['props','post'],
+    props: ['props','post', 'tag'],
     components : { Header, Footer },
     data(){
         return {

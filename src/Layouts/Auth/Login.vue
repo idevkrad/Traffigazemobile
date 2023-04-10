@@ -36,6 +36,11 @@
                                             </div>
                                         </div>
 
+                                        <div v-if="error != ''" class="alert alert-danger alert-solid fs-10 text-center" role="alert">
+                                            <span v-if="error == 'validation error'">All fields are required</span>
+                                            <span v-else>{{ error}}</span>
+                                        </div>
+
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" value="" id="auth-remember-check" />
                                             <label class="form-check-label" for="auth-remember-check">Remember me</label>
@@ -78,6 +83,7 @@ export default {
             validationErrors:{},
             processing:false,
             showPassword: false,
+            error: ''
         }
     },
     methods:{
@@ -93,8 +99,9 @@ export default {
                 if(response.status===422){
                     this.validationErrors = response.data.errors
                 }else{
-                    this.validationErrors = {}
-                    alert(response.data.message)
+                    this.validationErrors = {};
+                    this.error = response.data.message;
+                    // alert(response.data.message)
                 }
             }).finally(()=>{
                 this.processing = false

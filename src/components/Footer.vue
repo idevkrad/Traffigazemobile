@@ -18,6 +18,11 @@
                     <i class="ri-home-3-line"></i>
                 </router-link>
             </li>
+             <li class="nav-item">
+                <router-link to="/posts" class="nav-link">
+                    <i class=" ri-message-3-fill"></i>
+                </router-link>
+            </li>
             <li class="nav-item">
                 <router-link to="/create" class="nav-link">
                     <button class="btn btn-light btn-md position-relative p-0 avatar-xs rounded-circle" type="button">
@@ -29,9 +34,14 @@
                     </button>
                 </router-link>
             </li>
+             <li class="nav-item">
+                <router-link to="/history" class="nav-link">
+                    <i class="bx bx-history"></i>
+                </router-link>
+            </li>
             <li class="nav-item">
-                <router-link to="/posts" class="nav-link">
-                    <i class='bx bxs-report'></i>
+                <router-link to="/statistic" class="nav-link">
+                    <i class='ri-bar-chart-2-line'></i>
                 </router-link>
             </li>
         </ul>

@@ -56,7 +56,6 @@ const routes = [
             title: `Dashboard`
         }
     },
-
     {
         path: "/posts",
         name: "posts",
@@ -83,6 +82,34 @@ const routes = [
         meta: {
             middleware: "auth",
             title: `Create`
+        }
+    },
+    {
+        path: "/history",
+        name: "history",
+        component: () => import('@/views/History/Index.vue'),
+        meta: {
+            middleware: "auth",
+            title: `Histories`
+        }
+    },
+    {
+        path: "/history/:id/:type",
+        name: "history/view",
+        component: () => import('@/views/History/View.vue'),
+        props: true,
+        meta: {
+            middleware: "auth",
+            title: `View History`
+        }
+    },
+    {
+        path: "/statistic",
+        name: "statistic",
+        component: () => import('@/views/Statistic/Index.vue'),
+        meta: {
+            middleware: "auth",
+            title: `Statistics`
         }
     },
     {
