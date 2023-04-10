@@ -7,6 +7,7 @@
                      <b-col lg="12">
                         <b-card no-body>
                             <b-card-body>
+                                <h6>Overall Count</h6>
                                <div class="table-responsive">
                                     <table class="table table-bordered align-middle table-nowrap mb-0">
                                         <thead>

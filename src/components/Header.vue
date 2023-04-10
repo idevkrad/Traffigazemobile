@@ -25,7 +25,6 @@
                             <b-link href="#!">
                                 <h6 class="mb-0 fs-13">{{ tag.name }}</h6>
                             </b-link>
-                            <p class="mb-0 text-muted fs-11">wew</p>
                         </div>
                         <div class="bookmark-icon">
                             <router-link :to="{ path: '/history'}"><i class="ri ri-close-circle-fill text-dark align-middle h1"></i></router-link>
