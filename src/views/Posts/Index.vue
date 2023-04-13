@@ -1,10 +1,11 @@
 <template>
-<Layout>
+<Layout title="Posts">
     <div class="main-content">
         <div class="page-content">
             <b-container fluid>
                 <b-row>
                     <b-col lg="12 mt-n2 mb-3">
+                        <nav aria-label="Page navigation example" class="mt-2 bg-white">
                         <b-btn-group class="btn-group btn-group-sm" style="width: 100%;">
                             <input type="radio" class="btn-check" name="btnradio" id="btnradio1" @click="sorty('latest')">
                             <label class="btn btn-outline-secondary mb-0" for="btnradio1">Latest</label>
@@ -13,6 +14,7 @@
                              <input type="radio" class="btn-check" name="btnradio" id="btnradio3" @click="sorty('barangay')">
                             <label class="btn btn-outline-secondary mb-0" for="btnradio3">Barangay</label>
                         </b-btn-group>
+                        </nav>
 
                         <div class="mt-2" v-if="type == 'barangay'">
                             <select v-model="barangay" class="form-select" aria-label="Default select example">
@@ -127,7 +129,7 @@ export default {
             .catch(err => console.log(err));
         },
         subscribe() {
-            let pusher = new Pusher('14287ee65fa2808ae890', { cluster: 'ap1' })
+            let pusher = new Pusher('f9960142a530c321b7e6', { cluster: 'ap1' })
             pusher.subscribe('posts')
             pusher.bind('App\\Events\\PostBroadcast', data => {
                 // console.log(data);
@@ -154,6 +156,7 @@ export default {
                         let index3 = this.posts.findIndex((it) => {
                             return it.id === data.post.post_id
                         });
+                        // console.log(this.posts[index3].reports);
                         this.posts[index3].reports.push(data.post);
                     break;
                      case 'unreported':
@@ -161,7 +164,7 @@ export default {
                             return it.id === data.post.post_id
                         });
                         let index5 = this.posts[index4].reports.findIndex((it) => {
-                            return it.id === data.post.like_id
+                            return it.id === data.post.report_id
                         });
                         this.posts[index4].reports.splice(index5, 1);
                     break;

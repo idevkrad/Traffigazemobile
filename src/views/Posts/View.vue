@@ -77,7 +77,7 @@
                     .catch(err => console.log(err));
             },
             subscribe() {
-                let pusher = new Pusher('14287ee65fa2808ae890', {
+                let pusher = new Pusher('f9960142a530c321b7e6', {
                     cluster: 'ap1'
                 })
                 pusher.subscribe('posts')

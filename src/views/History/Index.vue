@@ -1,5 +1,5 @@
 <template>
-<Layout>
+<Layout title="History">
     <div class="main-content">
         <div class="page-content">
             <b-container fluid>

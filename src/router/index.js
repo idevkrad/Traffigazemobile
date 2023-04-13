@@ -20,33 +20,33 @@ const routes = [
             title: `Register`
         }
     },
-    // {
-    //     path: "/",
-    //     name: "admin",
-    //     component: () => import('@/views/Admin/Home.vue'),
-    //     meta: {
-    //         middleware: "auth",
-    //         title: `Admin`
-    //     }
-    // },
-    // {
-    //     path: "/users",
-    //     name: "users",
-    //     component: () => import('@/views/Admin/User.vue'),
-    //     meta: {
-    //         middleware: "auth",
-    //         title: `Users`
-    //     }
-    // },
-    // {
-    //     path: "/reports",
-    //     name: "reports",
-    //     component: () => import('@/views/Admin/Reports.vue'),
-    //     meta: {
-    //         middleware: "auth",
-    //         title: `Reports`
-    //     }
-    // },
+    {
+        path: "/admin",
+        name: "admin",
+        component: () => import('@/views/Admin/Home.vue'),
+        meta: {
+            middleware: "auth",
+            title: `Admin`
+        }
+    },
+    {
+        path: "/users",
+        name: "users",
+        component: () => import('@/views/Admin/User.vue'),
+        meta: {
+            middleware: "auth",
+            title: `Users`
+        }
+    },
+    {
+        path: "/reports",
+        name: "reports",
+        component: () => import('@/views/Admin/Reports.vue'),
+        meta: {
+            middleware: "auth",
+            title: `Reports`
+        }
+    },
     {
         path: "/",
         name: "dashboard",
@@ -142,11 +142,11 @@ router.beforeEach((to, from, next) => {
     document.title = to.meta.title
     if (to.meta.middleware == "guest") {
         if (store.state.auth.authenticated) {
-            // if (store.state.auth.user.data.is_admin){
-            //     next({ name: "admin" })
-            // }else{
+            if (store.state.auth.user.data.is_admin){
+                next({ name: "admin" })
+            }else{
                 next({ name: "dashboard" })
-            // }
+            }
         }
         next()
     } else {

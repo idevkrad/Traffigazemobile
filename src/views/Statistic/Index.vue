@@ -1,5 +1,5 @@
 <template>
-<Layout>
+<Layout title="Statistic">
     <div class="main-content">
         <div class="page-content">
             <b-container fluid>

@@ -2,7 +2,7 @@
     <footer class="footer p-2">
         <ul class="nav nav-pills nav-justified card-footer-tabs fs-17">
             <li class="nav-item">
-                <router-link to="/" class="nav-link">
+                <router-link to="/admin" class="nav-link">
                     <i class="ri-home-3-line"></i>
                 </router-link>
             </li>

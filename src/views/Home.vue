@@ -87,7 +87,7 @@ export default {
             }
         },
         subscribe() {
-            let pusher = new Pusher('14287ee65fa2808ae890', { cluster: 'ap1' })
+            let pusher = new Pusher('f9960142a530c321b7e6', { cluster: 'ap1' })
             pusher.subscribe('posts')
             pusher.bind('App\\Events\\PostBroadcast', data => {
                 // console.log(data);

@@ -20,9 +20,15 @@
                                         <li class="fs-12"><i class="ri-mail-line me-2 align-middle text-muted"></i>{{this.$store.state.auth.user.data.email}}</li>
                                         <li class="fs-12"><i class="ri-phone-line me-2 align-middle text-muted"></i>{{this.$store.state.auth.user.data.mobile}}</li>
                                     </ul>
+                                    <div class="d-grid gap-2 mt-2">
+                                            <button class="btn btn-light btn-sm" @click="ClickImage()" type="button" block="">
+                                                <div class="btn-content">Change Photo</div>
+                                            </button>
+                                        </div>
                                 </div>
                             </div>
                         </b-col>
+                        
                         <b-col lg="12 mt-n3 mb-2">
                             <span class="badge bg-secondary bg-secondary w-100">My Posts</span>
                         </b-col>
@@ -71,34 +77,82 @@
     </Layout>
 </template>
 <script>
+import { mapActions } from 'vuex'
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import axios from 'axios';
-    import Layout from '../Layouts/Main.vue';
-    export default {
-        components: {
-            Layout
+import Layout from '../Layouts/Main.vue';
+export default {
+    components: {
+        Layout
+    },
+    data(){
+        return {
+            user_id: this.$store.state.auth.user.data.id,
+            load: false,
+            posts: [],
+            imageUrl: '',
+        }
+    },
+    created(){
+        this.fetch();
+    },
+    methods : {
+         ...mapActions({
+            updateImg:'auth/update'
+        }),
+        fetch(){
+            this.load = false;
+            axios.get('/posts',{ params : {type : 'profile', id: this.user_id}})
+            .then(response => {
+                if(response){
+                    this.posts = response.data.data;     
+                    this.load = true;
+                }
+            })
+            .catch(err => console.log(err));
         },
-        data(){
-            return {
-                user_id: this.$store.state.auth.user.data.id,
-                load: false,
-                posts: []
+
+        async ClickImage() {
+            await Camera.getPhoto({
+                quality: 90,
+                allowEditing: false,
+                source: CameraSource.Camera,
+                resultType: CameraResultType.Base64,
+                }).then((image) => {
+                this.render = true;
+                this.imageUrl = String(image.base64String)
+                this.imageUrl = 'data:image/jpeg;base64,'+this.imageUrl;
+                this.update();
+            });
+        },
+
+        update(){
+            this.processing = true;
+
+            let data = new FormData()
+            data.append('id', this.$store.state.auth.user.data.id);
+            data.append('avatar', this.imageUrl)
+            
+            let config = {
+                header : {
+                'Content-Type' : 'multipart/form-data'
+                }
             }
+
+            axios.post('update',data,config).then(({data})=>{
+               this.updateImg();
+               this.$router.go(0);
+            }).catch(({response})=>{
+                if(response.status===422){
+                    this.validationErrors = response.data.errors
+                }else{
+                    this.validationErrors = {}
+                    alert(response.data.message)
+                }
+            }).finally(()=>{
+                this.processing = false
+            })
         },
-        created(){
-            this.fetch();
-        },
-        methods : {
-            fetch(){
-                this.load = false;
-                axios.get('/posts',{ params : {type : 'profile', id: this.user_id}})
-                .then(response => {
-                    if(response){
-                        this.posts = response.data.data;     
-                        this.load = true;
-                    }
-                })
-                .catch(err => console.log(err));
-            },
-        },
-    }
+    },
+}
 </script>

@@ -21,6 +21,9 @@ export default {
         },
         SET_USER (state, value) {
             state.user = value
+        },
+        UPDATE_IMG (state, value) {
+            state.user = value;
         }
     },
     actions:{
@@ -33,7 +36,11 @@ export default {
             return axios.get('/user',config).then(({data})=>{
                 commit('SET_USER',data)
                 commit('SET_AUTHENTICATED',true)
-                router.push({name:'dashboard'})
+                if(data.data.is_admin){
+                    router.push({name:'admin'})
+                }else{
+                    router.push({name:'dashboard'})
+                }
             }).catch(({response:{data}})=>{
                 commit('SET_USER',{})
                 commit('SET_AUTHENTICATED',false)
@@ -43,6 +50,16 @@ export default {
             commit('SET_USER',{})
             commit('SET_AUTHENTICATED',false)
             localStorage.removeItem("token"); 
-        }
+        },
+        update({commit}){
+            const config = {
+                headers:{
+                  Authorization: `Bearer `+localStorage.getItem('token'),
+                }
+              };
+            return axios.get('/user',config).then(({data})=>{
+                commit('UPDATE_IMG',data);
+            }).catch(({response:{data}})=>{})
+        },
     }
 }

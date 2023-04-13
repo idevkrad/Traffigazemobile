@@ -36,14 +36,14 @@
                         </button>
                         <div class="dropdown-menu dropdown-menu-end">
                             <h6 class="dropdown-header">{{ user.name}}</h6>
-                            <router-link class="dropdown-item" to="/profile"><i
+                            <!-- <router-link class="dropdown-item" to="/profile"><i
                                     class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i>
                                 <span class="align-middle">Profile</span>
                             </router-link>
                             <router-link class="dropdown-item" to="/setting"><i
                                     class="mdi mdi-cog text-muted fs-16 align-middle me-1"></i>
                                 <span class="align-middle">Setting</span>
-                            </router-link>
+                            </router-link> -->
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" @click="logout"><i
                                     class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>

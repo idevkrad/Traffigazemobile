@@ -33,6 +33,7 @@
                 </div>
                 <div class="d-flex">
                     <!-- LOGO -->
+                    <h5 class="text-primary mt-2">{{title}}</h5>
                     <div class="navbar-brand-box horizontal-logo">  
                         <router-link to="/" class="logo logo-dark">
                             <span class="logo-lg">
@@ -136,7 +137,7 @@ import Pusher from 'pusher-js';
     import { SimpleBar } from "simplebar-vue3";
     export default {
         components: { SimpleBar, Pusher },
-        props: ['user', 'post', 'tag', 'barangay'],
+        props: ['user', 'post', 'tag', 'barangay', 'title'],
         data(){
             return {
                 user_id: this.$store.state.auth.user.data.id,
@@ -206,7 +207,7 @@ import Pusher from 'pusher-js';
             },
 
             subscribe() {
-                let pusher = new Pusher('14287ee65fa2808ae890', { cluster: 'ap1' })
+                let pusher = new Pusher('f9960142a530c321b7e6', { cluster: 'ap1' })
                 pusher.subscribe('posts')
                 pusher.bind('App\\Events\\PostBroadcast', data => {
                     console.log(data);
