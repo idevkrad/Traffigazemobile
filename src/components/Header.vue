@@ -85,7 +85,7 @@
                                         
 
                                         <div class="my-3 text-center">
-                                            <b-button type="button" class="btn btn-sm" variant="soft-success">
+                                            <b-button @click="markall()" type="button" class="btn btn-sm" variant="soft-success">
                                                 Mark all as read
                                             </b-button>
                                         </div>
@@ -220,6 +220,15 @@ import Pusher from 'pusher-js';
                     }
                 })
             },
+            markall(){
+                this.notifications = [];
+                 axios.get('/markall',{params : { id : this.user_id}})
+                .then(response => {
+                    if(response){
+                    }
+                })
+                .catch(err => console.log(err));
+            }
         }
     }
 </script>

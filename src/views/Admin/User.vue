@@ -17,7 +17,7 @@
                         <b-list-group-item v-for="(list,index) in lists" v-bind:key="index">
                             <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0">
-                                    <img :src="list.avatar" alt="" class="avatar-xs rounded-circle">
+                                    <img :src="'https://traffigaze.info/images/avatars/'+list.avatar" alt="" class="avatar-xs rounded-circle">
                                 </div>
                                 <div class="flex-grow-1 ms-2">
                                     <p class="mb-0">{{list.name}}</p>
@@ -77,7 +77,7 @@ export default {
             })
             .then(response => {
                 if(response){
-                    this.lists = response.data.data;     
+                    this.lists = response.data.data.data;     
                     this.load = true;
                 }
             })

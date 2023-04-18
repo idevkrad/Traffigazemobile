@@ -10,11 +10,9 @@
             :mapTypeControl="false"
             :disableDefaultUI="true"
             :styles="st"
-            @click="mark"
             >
-             <Marker :options="{ position: destination }"/>
             <Marker :options="{ position: center }"/>
-            <Polyline :options="routepath" />
+        
             <Marker 
                 :key="index"
                 v-for="(m, index) in posts"
@@ -30,7 +28,6 @@
             />
             
         </GoogleMap>
-      
           <button @click="getRoute()" class="btn btn-info  btn-md btn-icon" type="button" id="back-to-top" style="display: block; right: 10px; bottom: 150px;">
             <div class="btn-content"><i class="bx  bx bx-refresh"></i></div>
         </button>
@@ -47,10 +44,10 @@
 <script>
 import Pusher from 'pusher-js';
 import axios from 'axios';
-import { GoogleMap, Marker, Polyline } from 'vue3-google-map';
+import { GoogleMap, Marker } from 'vue3-google-map';
 import Layout from '../Layouts/Main.vue';
 export default {
-    components: { Layout, GoogleMap, Marker, Pusher, Polyline },
+    components: { Layout, GoogleMap, Marker, Pusher },
     data() {
         return {
             center: {lat: 6.9305836, lng: 122.0824712},
@@ -63,15 +60,13 @@ export default {
                     ]
                 }
             ],
-            routepath : {
-            },
             posts: [],
             currentPlace: null,
             markers: [],
             places: [],
             directionsService: '',
             directionsDisplay: '',
-            destination: {lat: 6.9301867, lng: 122.08967}
+            destination: {lat: 6.9301867, lng: 122.08967},
 
         };
     },
@@ -79,39 +74,15 @@ export default {
     created(){
         this.fetch();
         this.geolocate();
-        this.subscribe();
-        this.trackPosition();
+        // this.subscribe();
     },
 
     methods: {
-        mark(event){
-            const marker = {
-                lat: event.latLng.lat(),
-                lng: event.latLng.lng(),
-            };
-            this.destination = marker;
-            this.getRoute();
-        },
         getRoute: function () {
-            // var noPoi = [
-            // {
-            //     featureType: "poi",
-            //     stylers: [
-            //     { visibility: "off" }
-            //     ]   
-            // }
-            // ];
-
-            // let map = new google.maps.Map(document.getElementById("mapContainer"),{
-            //     zoom: 16,
-            //     streetViewControl: false,
-            //     mapTypeControl: false,
-            //     disableDefaultUI: true,
-            //     styles: noPoi
-            // });
+            let map = new google.maps.Map(document.getElementById("mapContainer"));
             this.directionsService = new google.maps.DirectionsService()
             this.directionsDisplay = new google.maps.DirectionsRenderer()
-            // this.directionsDisplay.setMap(map)
+            this.directionsDisplay.setMap(map)
             // this.$refs.mapy.$mapObject
             var vm = this
             vm.directionsService.route({
@@ -120,22 +91,9 @@ export default {
                 travelMode: 'DRIVING',
             }, function (response, status) {
                 if (status === 'OK') {
-                    // vm.directionsDisplay.setDirections(response) // draws the polygon to the map
-                    // console.log(google.maps.geometry.encoding.decodePath(response.routes[0].overview_polyline));
+                vm.directionsDisplay.setDirections(response) // draws the polygon to the map
+              
 
-                    const routePath = {
-                        path: google.maps.geometry.encoding.decodePath(response.routes[0].overview_polyline),
-                        geodesic: true,
-                        strokeColor: '#0c8fbb',
-                        strokeOpacity: 1.0,
-                        strokeWeight: 4,
-                    }
-                    vm.routepath = routePath;
-                    let last = google.maps.geometry.encoding.decodePath(response.routes[0].overview_polyline);
-                    console.log(response);
-                    // this.destination = last[last.length-1];
-                    // console.log(last[last.length-1])
-                    // console.log(vm.routepath);
                 } else {
                 console.log('Directions request failed due to ' + status)
                 }
