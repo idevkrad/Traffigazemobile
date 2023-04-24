@@ -13,7 +13,10 @@
             @click="mark"
             >
              <Marker :options="{ position: destination }"/>
-            <Marker :options="{ position: center }"/>
+            <Marker :options="{ position: center, icon: {
+                        url:'https://traffigaze.info/images/icons/marker.png',
+                        scaledSize: {width: 35, height: 35},
+                    }, }"/>
             <Polyline :options="routepath" />
             <Marker 
                 :key="index"
@@ -23,7 +26,6 @@
                     icon: {
                         url: m.tag.icon,
                         scaledSize: {width: 25, height: 25},
-  
                     },
                 }"
                 @click="view(m.id)"
@@ -31,9 +33,9 @@
             
         </GoogleMap>
       
-          <button @click="getRoute()" class="btn btn-info  btn-md btn-icon" type="button" id="back-to-top" style="display: block; right: 10px; bottom: 150px;">
+          <!-- <button @click="getRoute()" class="btn btn-info  btn-md btn-icon" type="button" id="back-to-top" style="display: block; right: 10px; bottom: 150px;">
             <div class="btn-content"><i class="bx  bx bx-refresh"></i></div>
-        </button>
+        </button> -->
         <button @click="fetch()" class="btn btn-info  btn-md btn-icon" type="button" id="back-to-top" style="display: block; right: 10px; bottom: 110px;">
             <div class="btn-content"><i class="bx  bx bx-refresh"></i></div>
         </button>
@@ -71,7 +73,7 @@ export default {
             places: [],
             directionsService: '',
             directionsDisplay: '',
-            destination: {lat: 6.9301867, lng: 122.08967}
+            destination: {}
 
         };
     },

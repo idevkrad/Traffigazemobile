@@ -77,7 +77,7 @@ export default {
             })
             .then(response => {
                 if(response){
-                    this.lists = response.data.data.data;     
+                    this.lists = response.data.data;     
                     this.load = true;
                 }
             })

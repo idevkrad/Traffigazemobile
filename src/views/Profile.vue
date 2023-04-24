@@ -21,10 +21,13 @@
                                         <li class="fs-12"><i class="ri-phone-line me-2 align-middle text-muted"></i>{{this.$store.state.auth.user.data.mobile}}</li>
                                     </ul>
                                     <div class="d-grid gap-2 mt-2">
-                                            <button class="btn btn-light btn-sm" @click="ClickImage()" type="button" block="">
-                                                <div class="btn-content">Change Photo</div>
-                                            </button>
-                                        </div>
+                                        <button class="btn btn-light btn-sm" @click="ClickImage()" type="button" block="">
+                                            <div class="btn-content">Change Photo (Camera)</div>
+                                        </button>
+                                            <button class="btn btn-light btn-sm" @click="ClickImage2()" type="button" block="">
+                                            <div class="btn-content">Change Photo (Upload)</div>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </b-col>
@@ -117,6 +120,20 @@ export default {
                 quality: 90,
                 allowEditing: false,
                 source: CameraSource.Camera,
+                resultType: CameraResultType.Base64,
+                }).then((image) => {
+                this.render = true;
+                this.imageUrl = String(image.base64String)
+                this.imageUrl = 'data:image/jpeg;base64,'+this.imageUrl;
+                this.update();
+            });
+        },
+
+        async ClickImage2() {
+            await Camera.getPhoto({
+                quality: 90,
+                allowEditing: false,
+                source: CameraSource.Photos,
                 resultType: CameraResultType.Base64,
                 }).then((image) => {
                 this.render = true;
