@@ -31,8 +31,9 @@
                         </center>
                     </b-col>
                     <b-col lg="12" v-for="(post,index) in posts" v-bind:key="index" v-else>
-                        <b-card no-body class="explore-box card-animate border">
+                        <b-card no-body class="explore-box card-animate border ribbon-box">
                             <b-card-body>
+                                <div v-if="post.is_near" class="ribbon-two ribbon-two-danger"><span>Near</span></div>
                                 <div class="d-flex align-items-center mb-3">
                                     <img :src="post.user.avatar" alt=""
                                         class="avatar-xs rounded-circle">
@@ -40,7 +41,7 @@
                                         <b-link href="#!">
                                             <h6 class="mb-0 fs-13">{{ post.user.name }}</h6>
                                         </b-link>
-                                        <p class="mb-0 text-muted fs-11">{{ post.created_at }}</p>
+                                        <p class="mb-0 text-muted fs-11">{{ post.created_at }} {{post.is_near}}</p>
                                     </div>
                                     <div class="bookmark-icon">
                                       <i class="mdi mdi-heart text-danger align-middle"></i> <span :id="'count'+post.id">{{ post.likes.length }}</span>
@@ -61,7 +62,7 @@
                                    {{ post.information}}
                                 </div>
                             </b-card-body>
-                            <b-card-footer class="border-top border-top-dashed">
+                            <b-card-footer v-if="post.is_near" class="border-top border-top-dashed">
                                 <ul class="nav nav-justified card-footer-tabs fs-17 mt-n3 mb-n3">
                                     <li class="nav-item">
                                         <a href="#/" class="nav-link">
@@ -69,7 +70,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <router-link :to="{ path: '/post/'+post.id }" class="nav-link">
+                                        <router-link :to="{ path: '/post/'+post.id+'/'+post.is_near }" class="nav-link">
                                             <i class='bx bx-message-square-dots' ></i>
                                         </router-link>
                                     </li>
@@ -103,13 +104,16 @@ export default {
             load: false,
              barangays: [],
             tags: [],
-            barangay: ''
+            barangay: '',
+            center: '',
+            diameter: 500
         }
     },
     created(){
         this.subscribe();
         this.fetch();
         this.fetchLists();
+        this.trackPosition();
     },
      watch : {
         barangay(){
@@ -221,6 +225,35 @@ export default {
                 }
             })
             .catch(err => console.log(err));
+        },
+        trackPosition() {
+            if (navigator.geolocation) {
+                navigator.geolocation.watchPosition(this.successPosition, this.failurePosition, {
+                enableHighAccuracy: true,
+                timeout: 40000,
+                maximumAge: 0,
+                })
+            } else {
+                alert(`Browser doesn't support Geolocation`)
+            }
+        },
+        successPosition: function(position) {
+            this.center = {lat: position.coords.latitude, lng: position.coords.longitude};
+            for (let i = 0; i < this.posts.length; i++) {
+                this.posts[i].is_near = this.arePointsNear(this.center,this.posts[i].coordinates,this.diameter);
+            } 
+            console.log(this.posts);
+        },
+        failurePosition: function(err) {
+            console.log('Error Code: ' + err.code + ' Error Message: ' + err.message)
+        },
+          arePointsNear(checkPoint, centerPoint, km) { 
+            var km = km/1000;
+            var ky = 40000 / 360;
+            var kx = Math.cos(Math.PI * centerPoint.lat / 180.0) * ky;
+            var dx = Math.abs(centerPoint.lng - checkPoint.lng) * kx;
+            var dy = Math.abs(centerPoint.lat - checkPoint.lat) * ky;
+            return Math.sqrt(dx * dx + dy * dy) <= km;
         },
     }
 }

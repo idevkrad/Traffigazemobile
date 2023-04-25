@@ -28,21 +28,10 @@
                         scaledSize: {width: 25, height: 25},
                     },
                 }"
-                @click="view(m.id,m.is_near)"
+                @click="view(m.id)"
             />
               <Circle
-                :key="index"
-                v-for="(post,index) in posts"
-                :options="{
-                    center: post.coordinates,
-                    radius: 500,
-                    strokeColor: (post.is_near) ? '#FF0000' : '#ffffff',
-                    strokeOpacity: 0.8,
-                    strokeWeight: 2,
-                    fillColor: (post.is_near) ? '#FF0000' : '#ffffff',
-                    fillOpacity: 0.35,
-                    clickable: false
-                }"
+                :options="options"
             />
             
         </GoogleMap>
@@ -89,6 +78,7 @@ export default {
             directionsDisplay: '',
             destination: {},
             options: {
+                 center:  { lat: 6.9102234, lng: 122.075791 },
                 radius: 500,
                 strokeColor: "#FF0000",
                 strokeOpacity: 0.8,
@@ -123,7 +113,6 @@ export default {
             
         },
         arePointsNear(checkPoint, centerPoint, km) { 
-            var km = km/1000;
             var ky = 40000 / 360;
             var kx = Math.cos(Math.PI * centerPoint.lat / 180.0) * ky;
             var dx = Math.abs(centerPoint.lng - checkPoint.lng) * kx;
@@ -217,8 +206,8 @@ export default {
             })
             .catch(err => console.log(err));
         },
-        view(id,is_near){
-            this.$router.push({ path: '/post/'+id+'/'+is_near })
+        view(id){
+            this.$router.push({ path: '/post/'+id })
         },
         geolocate() {
             navigator.geolocation.getCurrentPosition(position => {
@@ -242,7 +231,7 @@ export default {
         successPosition: function(position) {
             this.center = {lat: position.coords.latitude, lng: position.coords.longitude};
             for (let i = 0; i < this.posts.length; i++) {
-                this.posts[i].is_near = this.arePointsNear(this.center,this.posts[i].coordinates,this.diameter);
+                this.posts[i].near = this.arePointsNear(this.center,this.posts[i].coordinates,this.diameter);
             } 
             console.log(this.posts);
         },

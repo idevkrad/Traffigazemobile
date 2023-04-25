@@ -16,7 +16,7 @@
                                             <li class="breadcrumb-item">{{ (post.barangay) ? post.barangay.name : ''}}</li>
                                         </ol>
                                         <p>{{post.information}}</p>
-                                        <code class="text-muted">{{post.location}}</code>
+                                        <code class="text-muted">{{post.location}} {{this.$route.params.type}}</code>
                                     </div>
                                 </div>
                                 <div class="card-body border-top border-bottom mt-2">
