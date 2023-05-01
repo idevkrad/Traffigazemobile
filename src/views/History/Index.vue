@@ -13,7 +13,7 @@
                         </b-btn-group>
                         <ul class="list-group mb-1" v-if="view == 'tag'">
                             <li class="list-group-item" v-for="(list,index) in tags" v-bind:key="index" style="cursor: pointer;">
-                                 <router-link :to="{ path: '/history/'+list.id+'/tag' }">
+                                 <!-- <router-link :to="{ path: '/history/'+list.id+'/tag' }"> -->
                                 <div class="d-flex align-items-center">
                                     <div class="flex-grow-1">
                                         <div class="d-flex">
@@ -29,12 +29,12 @@
                                         <span class="fw-bold text-primary">{{list.posts_count}}</span>
                                     </div>
                                 </div>
-                                </router-link>
+                                <!-- </router-link> -->
                             </li>
                         </ul>
                         <ul class="list-group mb-1" v-if="view == 'barangay'">
                             <li class="list-group-item" v-for="(list,index) in barangays" v-bind:key="index" style="cursor: pointer;">
-                                 <router-link :to="{ path: '/history/'+list.id+'/barangay' }">
+                                 <!-- <router-link :to="{ path: '/history/'+list.id+'/barangay' }"> -->
                                 <div class="d-flex align-items-center">
                                     <div class="flex-grow-1">
                                         <div class="d-flex">
@@ -50,7 +50,7 @@
                                         <span class="fw-bold text-primary">{{list.posts_count}}</span>
                                     </div>
                                 </div>
-                                </router-link>
+                                <!-- </router-link> -->
                             </li>
                         </ul>
                     </b-col>

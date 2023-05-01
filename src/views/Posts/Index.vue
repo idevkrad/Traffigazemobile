@@ -41,7 +41,7 @@
                                         <b-link href="#!">
                                             <h6 class="mb-0 fs-13">{{ post.user.name }}</h6>
                                         </b-link>
-                                        <p class="mb-0 text-muted fs-11">{{ post.created_at }} {{post.is_near}}</p>
+                                        <p class="mb-0 text-muted fs-11">{{ post.created_at }}</p>
                                     </div>
                                     <div class="bookmark-icon">
                                       <i class="mdi mdi-heart text-danger align-middle"></i> <span :id="'count'+post.id">{{ post.likes.length }}</span>
@@ -50,8 +50,8 @@
                                 <div class="explore-place-bid-img overflow-hidden rounded" v-if="post.image">
                                     <img :src="post.image" alt="" class="explore-img w-100">
                                     <div class="bg-overlay"></div>
-                                    <div class="place-bid-btn">
-                                        <router-link :to="{ path: '/post/'+post.id }" class="btn btn-success btn-sm"> View Post</router-link>
+                                    <div class="place-bid-btn" v-if="post.is_near">
+                                        <router-link :to="{ path: '/post/'+post.id+'/'+post.is_near  }" class="btn btn-success btn-sm"> View Post</router-link>
                                     </div>
                                     <!-- <div class="discount-time"><h5 id="auction-time-5" class="mb-0 text-white">54 : 11 : 34 : 59</h5></div> -->
                                 </div>
@@ -106,7 +106,7 @@ export default {
             tags: [],
             barangay: '',
             center: '',
-            diameter: 500
+            diameter: 300
         }
     },
     created(){

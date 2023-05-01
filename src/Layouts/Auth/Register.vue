@@ -15,21 +15,21 @@
                                     <b-alert v-model="authError" variant="danger" class="mt-3" dismissible>{{ authError }}</b-alert>
                                     <form @submit.prevent="tryToLogIn">
                                         <div class="mb-2">
-                                            <label for="name" class="form-label mb-n2 fs-11">Name</label>
+                                            <label for="name" class="form-label mb-n2 fs-11">Name <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control" id="name" placeholder="Enter name" v-model="user.name" style="text-transform: capitalize;"/>
                                             <div class="invalid-feedback">
                                                 <span></span>
                                             </div>
                                         </div>
                                         <div class="mb-2">
-                                            <label for="mobile" class="form-label mb-n2 fs-11">Mobile</label>
+                                            <label for="mobile" class="form-label mb-n2 fs-11">Mobile <span class="text-danger">*</span></label>
                                             <input type="number" class="form-control" id="mobile" placeholder="Enter mobile" v-model="user.mobile" />
                                             <div class="invalid-feedback">
                                                 <span></span>
                                             </div>
                                         </div>
                                         <div class="mb-2">
-                                            <label for="email" class="form-label mb-n2 fs-11">Email</label>
+                                            <label for="email" class="form-label mb-n2 fs-11">Email <span class="text-danger">*</span></label>
                                             <input type="email" class="form-control" id="email" placeholder="Enter email" v-model="user.email" />
                                             <div class="invalid-feedback">
                                                 <span></span>
@@ -37,7 +37,7 @@
                                         </div>
 
                                         <div class="mb-2">
-                                            <label for="password" class="form-label mb-n2 fs-11">Password</label>
+                                            <label for="password" class="form-label mb-n2 fs-11">Password <span class="text-danger">*</span></label>
                                             <input type="password" class="form-control" id="password" placeholder="Enter password" v-model="user.password" />
                                             <div class="invalid-feedback">
                                                 <span></span>
@@ -45,7 +45,7 @@
                                         </div>
 
                                          <div class="mb-2">
-                                            <label for="password" class="form-label mb-n2 fs-11">Re-Password</label>
+                                            <label for="password" class="form-label mb-n2 fs-11">Re-Password <span class="text-danger">*</span></label>
                                             <input type="password" class="form-control" id="password" placeholder="Enter password" v-model="user.confirm_password" />
                                             <div class="invalid-feedback">
                                                 <span></span>
@@ -114,7 +114,7 @@ export default {
                     this.validationErrors = response.data.errors
                 }else{
                     this.validationErrors = {}
-                    alert(response.data.message)
+                    alert('Please fill up all fields')
                 }
             }).finally(()=>{
                 this.processing = false

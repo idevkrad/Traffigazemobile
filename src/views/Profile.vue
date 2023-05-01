@@ -43,7 +43,7 @@
                             </center>
                         </b-col>
                         <b-col lg="12" v-for="(post,index) in posts" v-bind:key="index" v-else>
-                            <router-link :to="{ path: '/post/'+post.id }">
+                            <!-- <router-link :to="{ path: '/post/'+post.id }"> -->
                                 <b-card no-body class="explore-box card-animate border">
                                     <b-card-body>
                                         <div class="d-flex align-items-center mb-3">
@@ -71,7 +71,7 @@
                                         </div>
                                     </b-card-body>
                                 </b-card>
-                            </router-link>
+                            <!-- </router-link> -->
                         </b-col>
                     </b-row>
                 </b-container>

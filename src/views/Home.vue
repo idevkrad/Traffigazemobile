@@ -35,7 +35,7 @@
                 v-for="(post,index) in posts"
                 :options="{
                     center: post.coordinates,
-                    radius: 500,
+                    radius: 300,
                     strokeColor: (post.is_near) ? '#FF0000' : '#ffffff',
                     strokeOpacity: 0.8,
                     strokeWeight: 2,
@@ -89,7 +89,7 @@ export default {
             directionsDisplay: '',
             destination: {},
             options: {
-                radius: 500,
+                radius: 300,
                 strokeColor: "#FF0000",
                 strokeOpacity: 0.8,
                 strokeWeight: 2,
@@ -218,7 +218,9 @@ export default {
             .catch(err => console.log(err));
         },
         view(id,is_near){
-            this.$router.push({ path: '/post/'+id+'/'+is_near })
+            if(is_near){
+                this.$router.push({ path: '/post/'+id+'/'+is_near })
+            }
         },
         geolocate() {
             navigator.geolocation.getCurrentPosition(position => {
